@@ -1,4 +1,5 @@
 """Catalog endpoints: cities, trip search, seat map."""
+from django.db.models import Count, Q
 from django.utils import timezone
 from rest_framework import generics
 from rest_framework.response import Response
@@ -24,6 +25,14 @@ class TripSearchView(generics.ListAPIView):
                 status=Trip.Status.SCHEDULED, departure_at__gte=timezone.now()
             )
             .select_related("route__origin", "route__destination", "bus")
+            .annotate(
+                seats_taken=Count(
+                    "booked_seats",
+                    filter=Q(
+                        booked_seats__booking__status__in=("pending", "confirmed")
+                    ),
+                )
+            )
             .order_by("departure_at")
         )
         params = self.request.query_params
