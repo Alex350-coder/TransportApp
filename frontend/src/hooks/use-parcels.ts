@@ -1,6 +1,7 @@
 /** Parcel queries and mutations. */
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
 
+import { nextPageParam } from '@/hooks/use-catalog'
 import { apiFetch } from '@/lib/api-client'
 import type { Paginated, Quote, Shipment, TrackedShipment } from '@/types/api'
 
@@ -31,9 +32,12 @@ export function useCreateShipment() {
 }
 
 export function useMyShipments(enabled: boolean) {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['shipments', 'mine'],
-    queryFn: () => apiFetch<Paginated<Shipment>>('/parcels/mine/'),
+    queryFn: ({ pageParam }) =>
+      apiFetch<Paginated<Shipment>>(`/parcels/mine/?page=${pageParam}`),
+    initialPageParam: 1,
+    getNextPageParam: nextPageParam,
     enabled,
   })
 }

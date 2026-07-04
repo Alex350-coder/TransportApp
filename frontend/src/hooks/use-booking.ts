@@ -1,6 +1,7 @@
 /** Booking queries and mutations. */
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { nextPageParam } from '@/hooks/use-catalog'
 import { apiFetch } from '@/lib/api-client'
 import type { Booking, BookingSeat, Paginated, SeatMap } from '@/types/api'
 
@@ -34,9 +35,12 @@ export function useCreateBooking() {
 }
 
 export function useMyBookings(enabled: boolean) {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['bookings', 'mine'],
-    queryFn: () => apiFetch<Paginated<Booking>>('/bookings/mine/'),
+    queryFn: ({ pageParam }) =>
+      apiFetch<Paginated<Booking>>(`/bookings/mine/?page=${pageParam}`),
+    initialPageParam: 1,
+    getNextPageParam: nextPageParam,
     enabled,
   })
 }

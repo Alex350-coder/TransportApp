@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
 
+import { PictureFallback } from '@/components/ui/PictureFallback'
+
 interface AuthLayoutProps {
   title: string
   subtitle: string
@@ -17,15 +19,11 @@ export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
           <div className="mt-7">{children}</div>
         </div>
         <div className="relative hidden md:block">
-          <picture>
-            <source srcSet="/img/Segundo_frame.webp" type="image/webp" />
-            <img
-              src="/img/Segundo_frame.png"
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover"
-              loading="lazy"
-            />
-          </picture>
+          <PictureFallback
+            name="Segundo_frame"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+          />
           <div
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-primary-deep/70 to-transparent"

@@ -51,6 +51,12 @@ class Bus(models.Model):
     class Meta:
         verbose_name = "bus"
         verbose_name_plural = "buses"
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(aisle_after_col__lt=models.F("seat_cols")),
+                name="bus_aisle_within_columns",
+            ),
+        ]
 
     @property
     def seats_total(self) -> int:

@@ -25,7 +25,8 @@ export function RoutesSection() {
   const { data, isLoading } = useTripSearch({})
   const { item, container, viewport } = useReveal()
 
-  const routes = data ? pickPopularRoutes(data.items) : []
+  // The landing highlight only needs the first page of upcoming trips.
+  const routes = data ? pickPopularRoutes(data.pages[0]?.items ?? []) : []
   if (!isLoading && routes.length === 0) return null
 
   return (

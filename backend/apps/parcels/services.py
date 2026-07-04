@@ -1,6 +1,5 @@
 """Parcel pricing and shipment lifecycle."""
 import math
-import secrets
 from decimal import Decimal
 
 from django.db import transaction
@@ -8,6 +7,7 @@ from django.db.models import Q
 from rest_framework import serializers
 
 from apps.catalog.models import City, Route
+from apps.core.codes import generate_code
 
 from .models import Shipment, TrackingEvent
 
@@ -22,9 +22,6 @@ WEIGHT_TIERS = (
     (Decimal("20"), Decimal("2.5")),
 )
 OVERSIZE_MULTIPLIER = Decimal("4.0")
-
-CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
-CODE_LENGTH = 6
 
 STATUS_FLOW = (
     Shipment.Status.REGISTERED,
@@ -72,8 +69,7 @@ def estimated_days(distance_km: int) -> int:
 
 
 def generate_tracking_code() -> str:
-    suffix = "".join(secrets.choice(CODE_ALPHABET) for _ in range(CODE_LENGTH))
-    return f"RTX-ENV-{suffix}"
+    return generate_code("RTX-ENV-")
 
 
 def create_shipment(*, sender, origin: City, destination: City,

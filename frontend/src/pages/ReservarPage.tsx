@@ -92,6 +92,7 @@ export function ReservarPage() {
 
   const total = selectedTrip ? Number(selectedTrip.price) * selectedSeats.length : 0
   const loginNext = encodeURIComponent(location.pathname + location.search)
+  const trips = tripsQuery.data?.pages.flatMap((page) => page.items) ?? []
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
@@ -119,16 +120,26 @@ export function ReservarPage() {
           {tripsQuery.isError && (
             <Alert tone="error">No pudimos cargar los viajes. Inténtalo de nuevo.</Alert>
           )}
-          {tripsQuery.data?.items.length === 0 && (
+          {tripsQuery.isSuccess && trips.length === 0 && (
             <EmptyState
               icon="🚌"
               title="No encontramos viajes para esa fecha"
               description="Prueba con otra fecha u otra combinación de ciudades."
             />
           )}
-          {tripsQuery.data?.items.map((trip) => (
+          {trips.map((trip) => (
             <TripCard key={trip.id} trip={trip} onSelect={handleSelectTrip} />
           ))}
+          {tripsQuery.hasNextPage && (
+            <Button
+              variant="secondary"
+              className="mx-auto"
+              onClick={() => tripsQuery.fetchNextPage()}
+              isLoading={tripsQuery.isFetchingNextPage}
+            >
+              Cargar más viajes
+            </Button>
+          )}
         </section>
       )}
 

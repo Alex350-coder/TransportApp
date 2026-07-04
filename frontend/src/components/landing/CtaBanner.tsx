@@ -2,6 +2,7 @@ import { motion } from 'motion/react'
 import { useNavigate } from 'react-router'
 
 import { Button } from '@/components/ui/Button'
+import { PictureFallback } from '@/components/ui/PictureFallback'
 import { useReveal } from '@/hooks/use-reveal'
 
 export function CtaBanner() {
@@ -17,17 +18,11 @@ export function CtaBanner() {
         viewport={viewport}
         className="relative overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-20px_rgb(27_63_168/0.5)]"
       >
-        <picture>
-          <source srcSet="/img/Segundo_frame.webp" type="image/webp" />
-          <img
-            src="/img/Segundo_frame.png"
-            alt=""
-            width={1600}
-            height={900}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        </picture>
+        <PictureFallback
+          name="Segundo_frame"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-r from-primary-deep/90 via-primary-deep/60 to-transparent"

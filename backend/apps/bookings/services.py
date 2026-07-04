@@ -1,23 +1,17 @@
 """Booking creation: transactional, double-booking-proof."""
-import secrets
-
 from django.db import IntegrityError, transaction
 from django.utils import timezone
 from rest_framework import serializers
 
 from apps.catalog.models import Trip
+from apps.core.codes import generate_code
 
 from .exceptions import SeatTakenError
 from .models import Booking, BookingSeat
 
-# Unambiguous alphabet (no O/0, I/1/L) for human-readable ticket codes.
-CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
-CODE_LENGTH = 6
-
 
 def generate_booking_code() -> str:
-    suffix = "".join(secrets.choice(CODE_ALPHABET) for _ in range(CODE_LENGTH))
-    return f"RTX-{suffix}"
+    return generate_code("RTX-")
 
 
 def create_booking(*, user, trip: Trip, seats: list[dict]) -> Booking:

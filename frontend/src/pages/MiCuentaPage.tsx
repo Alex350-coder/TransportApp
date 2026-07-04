@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Badge } from '@/components/ui/Badge'
+import { Button } from '@/components/ui/Button'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { Spinner } from '@/components/ui/Spinner'
 import { useMyBookings } from '@/hooks/use-booking'
@@ -30,6 +31,8 @@ export function MiCuentaPage() {
   const [tab, setTab] = useState<Tab>('viajes')
   const bookings = useMyBookings(tab === 'viajes')
   const shipments = useMyShipments(tab === 'envios')
+  const bookingItems = bookings.data?.pages.flatMap((page) => page.items) ?? []
+  const shipmentItems = shipments.data?.pages.flatMap((page) => page.items) ?? []
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
@@ -65,7 +68,7 @@ export function MiCuentaPage() {
           className="mt-6 flex flex-col gap-4"
         >
           {bookings.isLoading && <Spinner label="Cargando tus viajes…" />}
-          {bookings.data?.items.length === 0 && (
+          {bookings.isSuccess && bookingItems.length === 0 && (
             <EmptyState
               icon="🚌"
               title="Todavía no tienes viajes"
@@ -77,7 +80,7 @@ export function MiCuentaPage() {
               }
             />
           )}
-          {bookings.data?.items.map((booking) => {
+          {bookingItems.map((booking) => {
             const badge = BOOKING_BADGES[booking.status]
             return (
               <Link
@@ -104,13 +107,23 @@ export function MiCuentaPage() {
               </Link>
             )
           })}
+          {bookings.hasNextPage && (
+            <Button
+              variant="secondary"
+              className="mx-auto"
+              onClick={() => bookings.fetchNextPage()}
+              isLoading={bookings.isFetchingNextPage}
+            >
+              Cargar más viajes
+            </Button>
+          )}
         </section>
       )}
 
       {tab === 'envios' && (
         <section role="tabpanel" aria-labelledby="tab-envios" className="mt-6 flex flex-col gap-4">
           {shipments.isLoading && <Spinner label="Cargando tus envíos…" />}
-          {shipments.data?.items.length === 0 && (
+          {shipments.isSuccess && shipmentItems.length === 0 && (
             <EmptyState
               icon="📦"
               title="Todavía no tienes envíos"
@@ -122,7 +135,7 @@ export function MiCuentaPage() {
               }
             />
           )}
-          {shipments.data?.items.map((shipment) => {
+          {shipmentItems.map((shipment) => {
             const badge = SHIPMENT_BADGES[shipment.status]
             return (
               <Link
@@ -148,6 +161,16 @@ export function MiCuentaPage() {
               </Link>
             )
           })}
+          {shipments.hasNextPage && (
+            <Button
+              variant="secondary"
+              className="mx-auto"
+              onClick={() => shipments.fetchNextPage()}
+              isLoading={shipments.isFetchingNextPage}
+            >
+              Cargar más envíos
+            </Button>
+          )}
         </section>
       )}
     </div>

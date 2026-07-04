@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 
 import { TripSearchForm } from '@/components/booking/TripSearchForm'
 import { Button } from '@/components/ui/Button'
+import { PictureFallback } from '@/components/ui/PictureFallback'
 import { easeOutExpo } from '@/lib/motion'
 
 const FLOATING_CHIPS = [
@@ -27,7 +28,7 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative overflow-hidden bg-gradient-to-b from-sky-light via-surface to-surface"
+      className="relative overflow-x-clip bg-gradient-to-b from-sky-light via-surface to-surface"
     >
       {/* Low-poly sky atmosphere */}
       <div
@@ -78,18 +79,13 @@ export function Hero() {
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
             className="overflow-hidden rounded-[2rem] border-4 border-white shadow-[0_30px_60px_-20px_rgb(27_63_168/0.45)]"
           >
-            <picture>
-              <source srcSet="/img/Primer_frame.webp" type="image/webp" />
-              <img
-                src="/img/Primer_frame.png"
-                alt="Bus RUTEX azul recorriendo una carretera entre montañas, con el mensaje Conecta tu mundo"
-                width={1600}
-                height={900}
-                fetchPriority="high"
-                loading="eager"
-                className="h-auto w-full"
-              />
-            </picture>
+            <PictureFallback
+              name="Primer_frame"
+              alt="Bus RUTEX azul recorriendo una carretera entre montañas, con el mensaje Conecta tu mundo"
+              fetchPriority="high"
+              loading="eager"
+              className="h-auto w-full"
+            />
           </motion.div>
 
           {FLOATING_CHIPS.map((chip, index) => (
@@ -112,7 +108,7 @@ export function Hero() {
       {/* Search widget, overlapping the hero bottom edge */}
       <motion.div
         {...entrance(0.35)}
-        className="relative mx-auto -mt-12 mb-[-3.5rem] w-full max-w-5xl px-4"
+        className="relative z-10 mx-auto -mt-12 mb-[-3.5rem] w-full max-w-5xl px-4"
       >
         <div className="rounded-card border border-sky-light/70 bg-white/95 p-6 shadow-[0_24px_50px_-20px_rgb(27_63_168/0.35)] backdrop-blur">
           <h2 className="mb-4 font-display text-lg font-bold text-ink">

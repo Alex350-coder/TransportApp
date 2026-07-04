@@ -74,3 +74,20 @@ pnpm build             # typecheck + build de producción
   `components/landing`, `ui/` primitivas) con design tokens en `src/styles/tokens.css`.
 - Los frames de marca (`Frames/`) se sirven optimizados como WebP desde
   `frontend/public/img/` (script: `frontend/scripts/optimize-images.mjs`).
+
+## Notas de seguridad
+
+Revisión hecha con agentes de seguridad y code review (sin hallazgos críticos). Estado actual:
+
+- **Aplicado**: rotación de refresh tokens **con blacklist**, throttling global
+  (`anon 60/min`, `user 120/min`) además de los scopes `auth`/`tracking`,
+  `SECRET_KEY` obligatorio y fuerte en producción (falla al arrancar si falta),
+  Swagger/`/api/schema/` solo en desarrollo, validación del parámetro `next`
+  en el frontend (solo rutas internas), CORS restringido al origen del frontend,
+  headers de seguridad (HSTS, nosniff, X-Frame-Options DENY) en `prod.py`.
+- **Tradeoff aceptado (demo)**: JWT en `localStorage` — mitigado con access token
+  de 30 min y rotación con blacklist.
+- **Pendiente antes de producción real**: protección de fuerza bruta en el login
+  de `/admin/` (p. ej. `django-axes` o rate limit en el reverse proxy),
+  `SECURE_PROXY_SSL_HEADER` según tu proxy, y `CSRF_TRUSTED_ORIGINS` si el admin
+  se sirve desde otro origen.

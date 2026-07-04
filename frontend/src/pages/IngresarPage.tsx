@@ -11,6 +11,7 @@ import { Field } from '@/components/ui/Field'
 import { Input } from '@/components/ui/Input'
 import { ApiRequestError } from '@/lib/api-client'
 import { useAuth } from '@/lib/auth-context'
+import { safeInternalPath } from '@/lib/navigation'
 
 const loginSchema = z.object({
   email: z.email('Ingresa un correo válido.'),
@@ -31,7 +32,7 @@ export function IngresarPage() {
     defaultValues: { email: '', password: '' },
   })
   const errors = form.formState.errors
-  const next = searchParams.get('next') ?? '/mi-cuenta'
+  const next = safeInternalPath(searchParams.get('next'), '/mi-cuenta')
 
   const handleSubmit = form.handleSubmit(async (values) => {
     setServerError('')

@@ -1,13 +1,7 @@
 /** Shared Framer Motion presets. Components pair these with useReducedMotion. */
-import type { Transition, Variants } from 'motion/react'
+import type { Variants } from 'motion/react'
 
 export const easeOutExpo = [0.16, 1, 0.3, 1] as const
-
-export const springSoft: Transition = {
-  type: 'spring',
-  stiffness: 260,
-  damping: 24,
-}
 
 export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },

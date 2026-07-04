@@ -11,6 +11,7 @@ import { Field } from '@/components/ui/Field'
 import { Input } from '@/components/ui/Input'
 import { ApiRequestError } from '@/lib/api-client'
 import { useAuth } from '@/lib/auth-context'
+import { safeInternalPath } from '@/lib/navigation'
 
 const MIN_PASSWORD_LENGTH = 8
 
@@ -50,7 +51,7 @@ export function RegistrarsePage() {
     },
   })
   const errors = form.formState.errors
-  const next = searchParams.get('next') ?? '/mi-cuenta'
+  const next = safeInternalPath(searchParams.get('next'), '/mi-cuenta')
 
   const handleSubmit = form.handleSubmit(async (values) => {
     setServerError('')

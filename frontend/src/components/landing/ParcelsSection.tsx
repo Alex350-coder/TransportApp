@@ -2,6 +2,7 @@ import { motion } from 'motion/react'
 import { useNavigate } from 'react-router'
 
 import { Button } from '@/components/ui/Button'
+import { PictureFallback } from '@/components/ui/PictureFallback'
 import { useReveal } from '@/hooks/use-reveal'
 
 const PARCEL_POINTS = [
@@ -24,17 +25,11 @@ export function ParcelsSection() {
         className="grid items-center gap-10 lg:grid-cols-2"
       >
         <motion.div variants={item} className="order-2 lg:order-1">
-          <picture>
-            <source srcSet="/img/Tercer_frame.webp" type="image/webp" />
-            <img
-              src="/img/Tercer_frame.png"
-              alt="Bus RUTEX junto a íconos flotantes de rastreo: ubicación, reloj y alertas"
-              width={1600}
-              height={900}
-              loading="lazy"
-              className="h-auto w-full rounded-[2rem] border-4 border-white shadow-[0_30px_60px_-20px_rgb(27_63_168/0.35)]"
-            />
-          </picture>
+          <PictureFallback
+            name="Tercer_frame"
+            alt="Bus RUTEX junto a íconos flotantes de rastreo: ubicación, reloj y alertas"
+            className="h-auto w-full rounded-[2rem] border-4 border-white shadow-[0_30px_60px_-20px_rgb(27_63_168/0.35)]"
+          />
         </motion.div>
 
         <div className="order-1 flex flex-col items-start gap-5 lg:order-2">
