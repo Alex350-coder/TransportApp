@@ -3,6 +3,25 @@
 Web app de transporte en español: **reserva de asientos** y **envío de encomiendas**
 con rastreo público. Proyecto full-stack de demostración.
 
+## 📌 About this project / Sobre este proyecto
+
+**EN** — This is a **personal prototype**, built as a portfolio piece for software
+development recruiters. It was created **with AI assistance** (Claude Code), driven by
+iterative instruction prompts, and complemented with **manual testing** on my side plus
+the automated test suites in the repo. It is **not a production system**: some features
+are intentionally not implemented — most notably **payments are simulated** (no real
+payment gateway), and there are no email/SMS notifications. The goal is to showcase
+full-stack architecture, testing discipline, and AI-assisted development workflow.
+
+**ES** — Este es un **prototipo personal**, creado como pieza de portafolio para
+reclutadores de posiciones de desarrollo de software. Fue construido **con asistencia de
+IA** (Claude Code), guiado por prompts de instrucciones iterativos, y complementado con
+**pruebas manuales** de mi parte además de las suites automatizadas del repo. **No es un
+sistema de producción**: algunas funcionalidades no están implementadas a propósito — en
+particular **los pagos son simulados** (sin pasarela real) y no hay notificaciones por
+correo/SMS. El objetivo es mostrar arquitectura full-stack, disciplina de testing y un
+flujo de desarrollo asistido por IA.
+
 > Documentación de contexto: [CONTEXT.md](CONTEXT.md) · Plan de construcción: [PLAN.md](PLAN.md)
 
 | Capa | Stack |

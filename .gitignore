@@ -2,6 +2,13 @@
 .env
 *.env.local
 
+# Personal / local-only files
+CLAUDE.local.md
+.claude/settings.local.json
+
+# Logs
+*.log
+
 # Output folder (project convention: ignored entirely)
 output/
 
