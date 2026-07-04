@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: rutex-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-rutex}
+      POSTGRES_USER: ${POSTGRES_USER:-rutex}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rutex_dev_password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - rutex_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rutex} -d ${POSTGRES_DB:-rutex}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  rutex_pgdata:

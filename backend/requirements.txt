@@ -1,0 +1,12 @@
+Django>=5.2,<6
+djangorestframework>=3.16
+djangorestframework-simplejwt>=5.5
+drf-spectacular>=0.28
+django-cors-headers>=4.7
+django-environ>=0.12
+psycopg[binary]>=3.2
+
+# Dev / test
+pytest>=8.3
+pytest-django>=4.11
+pytest-cov>=6.0
