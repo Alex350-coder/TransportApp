@@ -3,6 +3,7 @@ from datetime import timedelta
 from decimal import Decimal
 
 import pytest
+from django.core.management import call_command
 from django.db import IntegrityError
 from django.utils import timezone
 from rest_framework.test import APIClient
@@ -133,6 +134,22 @@ class TestTripSearch:
         )
 
         assert response.json()["data"]["items"] == []
+
+
+@pytest.mark.django_db
+class TestSeedDemo:
+    def test_seeds_catalog_and_is_idempotent(self):
+        call_command("seed_demo")
+
+        assert City.objects.count() == 10
+        assert Route.objects.count() == 20
+        assert Bus.objects.count() == 5
+        first_run_trips = Trip.objects.count()
+        assert first_run_trips > 0
+
+        call_command("seed_demo")
+
+        assert Trip.objects.count() == first_run_trips
 
 
 @pytest.mark.django_db

@@ -16,6 +16,8 @@ export default defineConfig({
     globals: true,
     setupFiles: './src/test/setup.ts',
     css: false,
+    // Playwright owns e2e/*.spec.ts; keep Vitest to unit/component tests.
+    exclude: ['e2e/**', 'node_modules/**'],
     coverage: {
       provider: 'v8',
       include: ['src/lib/**', 'src/hooks/**', 'src/components/**'],

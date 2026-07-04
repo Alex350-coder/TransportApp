@@ -53,8 +53,9 @@ describe('apiFetch', () => {
 
     await apiFetch('/auth/me/')
 
-    const [, init] = fetchSpy.mock.calls[0]
-    expect((init?.headers as Record<string, string>).Authorization).toBe('Bearer token-abc')
+    const init = fetchSpy.mock.calls[0][1] as RequestInit
+    const headers = init.headers as Record<string, string>
+    expect(headers.Authorization).toBe('Bearer token-abc')
   })
 
   test('refreshes the token and retries once on 401', async () => {
