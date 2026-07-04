@@ -15,7 +15,11 @@ env = environ.Env(
 # Root .env is shared by backend and frontend; missing file is fine (env vars win).
 environ.Env.read_env(REPO_ROOT / ".env")
 
-SECRET_KEY = env("DJANGO_SECRET_KEY", default="dev-only-insecure-key")
+# Fallback is dev-only; real deployments MUST set DJANGO_SECRET_KEY (>=50 chars).
+SECRET_KEY = env(
+    "DJANGO_SECRET_KEY",
+    default="dev-only-insecure-key-0123456789-abcdefghijklmnopqrstuvwxyz",
+)
 DEBUG = env("DJANGO_DEBUG")
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 
