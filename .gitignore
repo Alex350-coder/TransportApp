@@ -1,10 +1,28 @@
+# Local-only AI assistant / planning / context documents
+# (personal workflow, not needed to run the system)
+CLAUDE.md
+CLAUDE.*.md
+AGENTS.md
+GEMINI.md
+MEMORY.md
+CONTEXT.md
+CONTEXT.*.md
+PLAN.md
+PLAN.*.md
+NOTES.md
+TODO.md
+ROADMAP.md
+SPEC.md
+DESIGN.md
+DECISIONS.md
+.cursorrules
+.cursor/
+.claude/
+graphify-out/
+
 # Environment / secrets
 .env
 *.env.local
-
-# Personal / local-only files
-CLAUDE.local.md
-.claude/settings.local.json
 
 # Logs
 *.log
